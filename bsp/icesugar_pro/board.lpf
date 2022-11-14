@@ -1,0 +1,88 @@
+# The iCESugar-pro board provides 25MHz clock, a 1bpc RGB LED and a serial port.
+# A carrier board provides the following PMOD-compatible ports:
+#
+#  ╔═══════╗   ╔═══════╗   ╔═══════╗   ╔═══════╗   ╔═══════╗   ╔═══════╗
+#  ║  P.1  ║   ║  P.2  ║   ║  P.3  ║   ║  P.4  ║   ║  P.5  ║   ║  P.6  ║
+#  ╠═══╦═══╣   ╠═══╦═══╣   ╠═══╦═══╣   ╠═══╦═══╣   ╠═══╦═══╣   ╠═══╦═══╣ ┐
+#  ║3V3║3V3│   ║3V3║3V3│   ║3V3║3V3│   ║3V3║3V3│   ║3V3║3V3│   ║3V3║3V3│ ╷
+#  ╠═══╬───┤   ╠═══╬───┤   ╠═══╬───┤   ╠═══╬───┤   ╠═══╬───┤   ╠═══╬───┤ ╷
+#  │GND│GND│   │GND│GND│   │GND│GND│   │GND│GND│   │GND│GND│   │GND│GND│ ╷
+#  ├───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┤ ┐
+#  │   │   │   │B8 │A8 │   │K1 │G2 │   │R7 │R8 │   │C5 │D6 │   │F13│F14│ │
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ │
+#  │   │   │   │B7 │A7 │   │M1 │L2 │   │D5 │C4 │   │C6 │D7 │   │G13│G14│ │
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ │ P.n↑
+#  │   │   │   │B6 │A6 │   │N1 │M2 │   │D4 │C3 │   │C7 │D8 │   │H13│H14│ │
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ │
+#  │   │   │   │B5 │A5 │   │P1 │N3 │   │E4 │E3 │   │C8 │D9 │   │J13│J14│ │
+#  ├───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┤ ┘
+#  │   │   │   │B4 │A4 │   │R1 │P2 │   │F4 │F3 │   │C9 │D10│   │K13│K14│
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤
+#  │GND│5V │   │GND│5V │   │GND│5V │   │GND│5V │   │GND│5V │   │GND│5V │
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤
+#  │   │   │   │B3 │A3 │   │T2 │R2 │   │G4 │G3 │   │C10│D11│   │L13│L14│
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ ┐
+#  │3V3│3V3│   │3V3│3V3│   │3V3│3V3│   │3V3│3V3│   │3V3│3V3│   │3V3│3V3│ ╷
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ ╷
+#  │GND│GND│   │GND│GND│   │GND│GND│   │GND│GND│   │GND│GND│   │GND│GND│ ╷
+#  ├───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┼ ─ ┼───┼───┤ ┐
+#  │   │   │   │B1 │A2 │   │T3 │R3 │   │K4 │J4 │   │C11│D12│   │M13│M12│ │
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ │
+#  │   │   │   │C1 │B2 │   │T4 │R4 │   │H3 │J3 │   │C12│D13│   │P14│N13│ │
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ │ P.n↓
+#  │   │   │   │D1 │C2 │   │R6 │R5 │   │K3 │J2 │   │C13│E12│   │P13│N12│ │
+#  ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤   ├───┼───┤ │
+#  │   │   │   │F2 │E1 │   │P7 │T6 │   │   │   │   │E13│E14│   │P12│P11│ │
+#  └───┴───┴ ─ ┴───┴───┴ ─ ┴───┴───┴ ─ ┴───┴───┴ ─ ┴───┴───┴ ─ ┴───┴───┘ ┘
+
+# Onboard clock
+LOCATE COMP CLK SITE P6;
+FREQUENCY PORT CLK 25 MHZ;
+
+# Onboard 1bpc RGB LED
+LOCATE COMP LED[2] SITE B11;
+LOCATE COMP LED[1] SITE A11;
+LOCATE COMP LED[0] SITE A12;
+
+# iCELink serial port
+LOCATE COMP TX SITE B9;
+LOCATE COMP RX SITE A9;
+
+# 4bpc VGA PMOD on P.3                 ┌───┬───┐
+LOCATE COMP H_SYNC_   SITE N3;      #  │P7 │   │   Name       Alias
+LOCATE COMP V_SYNC_   SITE M2;      #  ├───┼───┤   ────────────────
+LOCATE COMP PIXEL[0]  SITE T6;      #  │P6 │   │   H_SYNC_       HS
+LOCATE COMP PIXEL[1]  SITE R5;      #  ├───┼───┤   V_SYNC_       VS
+LOCATE COMP PIXEL[2]  SITE R4;      #  │P5 │VS │   PIXEL[n]      Pn
+LOCATE COMP PIXEL[3]  SITE R3;      #  ├───┼───┤
+LOCATE COMP PIXEL[4]  SITE P1;      #  │P4 │HS │
+LOCATE COMP PIXEL[5]  SITE N1;      #  └───┴───┘
+LOCATE COMP PIXEL[6]  SITE M1;      #  ┌───┬───┐
+LOCATE COMP PIXEL[7]  SITE K1;      #  │P11│P3 │
+LOCATE COMP PIXEL[8]  SITE P7;      #  ├───┼───┤
+LOCATE COMP PIXEL[9]  SITE R6;      #  │P10│P2 │
+LOCATE COMP PIXEL[10] SITE T4;      #  ├───┼───┤
+LOCATE COMP PIXEL[11] SITE T3;      #  │P9 │P1 │
+                                    #  ├───┼───┤
+                                    #  │P8 │P0 │
+                                    #  └───┴───┘
+
+# CS5343/CS4344 I²S PMOD on P.2↑       ┌───┬───┐
+#LOCATE COMP  SITE B8;              #  │SDI│SDO│   Name       Alias
+#LOCATE COMP  SITE B7;              #  ├───┼───┤   ────────────────
+#LOCATE COMP  SITE B6;              #  │CLI│CLO│                SDd
+#LOCATE COMP  SITE B5;              #  ├───┼───┤                CLd
+#LOCATE COMP  SITE A8;              #  │LCI│LCO│                LCd
+#LOCATE COMP  SITE A7;              #  ├───┼───┤                MCd
+#LOCATE COMP  SITE A6;              #  │MCI│MCO│
+#LOCATE COMP  SITE A5;              #  └───┴───┘
+
+# ENC28J60 Ethernet PMOD on P.2↓       ┌───┬───┐
+LOCATE COMP CLK_SPI  SITE B1;       #  │CLK│   │   Name       Alias
+LOCATE COMP SPI_IN   SITE C1;       #  ├───┼───┤   ────────────────
+LOCATE COMP SPI_OUT  SITE D1;       #  │IN │   │   CLK_SPI      CLK
+LOCATE COMP CS_ETH   SITE F2;       #  ├───┼───┤   SPI_IN        IN
+LOCATE COMP INT_ETH_ SITE E1;       #  │OUT│   │   SPI_OUT      OUT
+                                    #  ├───┼───┤   CS_ETH        CS
+                                    #  │CS │INT│   INT_ETH_     INT
+                                    #  └───┴───┘
